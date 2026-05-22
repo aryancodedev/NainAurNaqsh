@@ -1,0 +1,20 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="140" y1="90" x2="1080" y2="810" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1321" />
+      <stop offset="1" stop-color="#1E1B18" />
+    </linearGradient>
+    <linearGradient id="accent" x1="260" y1="260" x2="920" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D4AF37" />
+      <stop offset="1" stop-color="#F5E7B0" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#bg)" />
+  <path d="M170 640C260 560 330 520 420 520C510 520 575 575 655 575C760 575 820 500 930 420" stroke="url(#accent)" stroke-width="22" stroke-linecap="round" />
+  <path d="M170 690C260 610 330 570 420 570C510 570 575 625 655 625C760 625 820 550 930 470" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="8" stroke-linecap="round" />
+  <circle cx="360" cy="470" r="170" fill="#D4AF37" fill-opacity="0.1" />
+  <circle cx="845" cy="330" r="140" fill="#F5E7B0" fill-opacity="0.08" />
+  <rect x="180" y="150" width="840" height="600" rx="36" fill="#FFFFFF" fill-opacity="0.03" stroke="#F5E7B0" stroke-opacity="0.14" />
+  <text x="220" y="260" fill="#F7F2E8" font-family="Arial, Helvetica, sans-serif" font-size="58" letter-spacing="6">NAIN AUR NAQSH</text>
+  <text x="220" y="330" fill="#D4AF37" font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="700" letter-spacing="2">Cultural Movement</text>
+</svg>

@@ -1,37 +1,70 @@
-import { motion } from 'motion/react';
+  import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef, useState } from 'react';
+
+const videoModules = (import.meta as any).glob('/src/assets/videos/*.{mp4,webm,ogg}', { eager: true, as: 'url' }) as Record<string, string>;
+const thumbnailModules = (import.meta as any).glob('/src/assets/thumbnail/*.{png,jpg,jpeg,webp,svg}', { eager: true, as: 'url' }) as Record<string, string>;
+
+const fallbackPoster = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0a0e27" />
+        <stop offset="1" stop-color="#1b1c22" />
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="900" rx="48" fill="url(#bg)" />
+    <rect x="160" y="150" width="880" height="600" rx="36" fill="rgba(255,255,255,0.03)" stroke="rgba(245,231,176,0.16)" />
+    <text x="220" y="330" fill="#f7f2e8" font-family="Arial, Helvetica, sans-serif" font-size="74" letter-spacing="4">VIDEO 5</text>
+    <text x="220" y="420" fill="#d4af37" font-family="Arial, Helvetica, sans-serif" font-size="34" letter-spacing="2">No thumbnail available</text>
+  </svg>
+`)}`;
+
+const getAssetUrl = (modules: Record<string, string>, fileName: string) => {
+  const match = Object.entries(modules).find(([path]) => path.endsWith(`/${fileName}`));
+  return match?.[1];
+};
 
 export default function Portfolio() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const projects = [
-    { title: "Brand Campaign", category: "Visual Direction", year: "2026" },
-    { title: "Creator Network", category: "Social Strategy", year: "2026" },
-    { title: "Cultural Movement", category: "Campaign Direction", year: "2025" },
-    { title: "Digital Presence", category: "Communication System", year: "2025" }
+  const workItems = [
+    { title: "Yaduraj Realty", category: "Real Estate Brand Film", year: "2026", videoFile: "video1.mp4", thumbnailFile: "VIDEO 1.png", galleryIndex: 0 },
+    { title: "Instant Energy Drinks", category: "Beverage Campaign", year: "2026", videoFile: "video2.mp4", thumbnailFile: "VIDEO 2.png", galleryIndex: 1 },
+    { title: "Twinkle Dental Care", category: "Healthcare Brand Story", year: "2025", videoFile: "video3.mp4", thumbnailFile: "VIDEO 4.png", galleryIndex: 2 },
+    { title: "Sundarone Hostels", category: "Hospitality Presence", year: "2025", videoFile: "video6.mp4", thumbnailFile: "VIDEO 6.png", galleryIndex: 3 }
   ];
 
-  // Load videos from src/assets/videos as URLs so <video> can play them
-  let videoUrls: string[] = [];
-  try {
-    const videoModules = (import.meta as any).glob('/src/assets/videos/*.{mp4,webm,ogg}', { eager: true, as: 'url' }) as Record<string, string> | undefined;
-    if (videoModules && typeof videoModules === 'object') {
-      videoUrls = Object.values(videoModules);
-    }
-  } catch (err) {
-    console.warn('Could not load videos via import.meta.glob', err);
-    videoUrls = [];
-  }
+  const galleryVideoOrder = ['video1.mp4', 'video2.mp4', 'video3.mp4', 'video6.mp4', 'video4.mp4', 'video5.mp4'];
+  const galleryMeta: Record<string, { title: string; category: string; thumbnailFile: string }> = {
+    'video1.mp4': { title: 'Yaduraj Realty', category: 'Real Estate Brand Film', thumbnailFile: 'VIDEO 1.png' },
+    'video2.mp4': { title: 'Instant Energy Drinks', category: 'Beverage Campaign', thumbnailFile: 'VIDEO 2.png' },
+    'video3.mp4': { title: 'Twinkle Dental Care', category: 'Healthcare Brand Story', thumbnailFile: 'VIDEO 4.png' },
+    'video4.mp4': { title: 'Twinkle Dental Care', category: 'Healthcare Brand Story', thumbnailFile: 'VIDEO 4.png' },
+    'video5.mp4': { title: 'Yaduraj Realty', category: 'Real Estate Brand Film', thumbnailFile: 'VIDEO 1.png' },
+    'video6.mp4': { title: 'Sundarone Hostels', category: 'Hospitality Presence', thumbnailFile: 'VIDEO 6.png' },
+  };
+
+  const galleryItems = galleryVideoOrder.map((videoFile) => {
+    const meta = galleryMeta[videoFile];
+    const posterFile = meta?.thumbnailFile ?? 'VIDEO 1.png';
+
+    return {
+      src: getAssetUrl(videoModules, videoFile),
+      title: meta?.title ?? 'Work',
+      category: meta?.category ?? 'Selected Reel',
+      poster: getAssetUrl(thumbnailModules, posterFile) ?? getAssetUrl(thumbnailModules, 'VIDEO 1.png') ?? fallbackPoster,
+    };
+  });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const [galleryMode, setGalleryMode] = useState(false);
 
   function openProject(i: number) {
-    setModalIndex(i);
+    setModalIndex(workItems[i].galleryIndex);
     setGalleryMode(false);
     setModalOpen(true);
   }
@@ -62,7 +95,7 @@ export default function Portfolio() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {workItems.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -76,9 +109,15 @@ export default function Portfolio() {
               onMouseLeave={() => setHoveredIndex(null)}
               className="group cursor-pointer"
             >
-              <div className="relative overflow-hidden aspect-[4/3] bg-gradient-to-br from-[var(--deep-graphite)] to-[var(--charcoal-black)] border border-[var(--warm-ivory)] border-opacity-10">
-                {videoUrls[index] ? (
-                  <video src={videoUrls[index]} controls className="absolute inset-0 w-full h-full object-cover" />
+              <div className="relative overflow-hidden aspect-video bg-gradient-to-br from-[var(--deep-graphite)] to-[var(--charcoal-black)] border border-[var(--warm-ivory)] border-opacity-10 rounded-xl">
+                {getAssetUrl(videoModules, project.videoFile) ? (
+                  <video
+                    src={getAssetUrl(videoModules, project.videoFile)}
+                    controls
+                    poster={getAssetUrl(thumbnailModules, project.thumbnailFile) ?? fallbackPoster}
+                    preload="metadata"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                 ) : null}
 
                 <motion.div
@@ -130,17 +169,38 @@ export default function Portfolio() {
         </motion.div>
 
         {modalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 z-50 overflow-y-auto py-8 sm:py-12">
             <div className="absolute inset-0 bg-black/70" onClick={() => setModalOpen(false)} />
 
-            <div className="relative z-10 max-w-6xl w-full mx-6">
-              <div className="bg-[var(--midnight-navy)] rounded p-6">
-                <button className="absolute top-4 right-6 text-white opacity-80" onClick={() => setModalOpen(false)}>Close</button>
+            <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 flex items-start justify-center min-h-full">
+              <div className="relative bg-[var(--midnight-navy)] rounded p-6 sm:p-8 w-full max-h-[90vh] overflow-y-auto">
+                <button
+                  type="button"
+                  className="sticky top-0 ml-auto mb-4 block text-white opacity-80 hover:opacity-100 transition-opacity bg-[var(--midnight-navy)]/95 backdrop-blur-sm px-3 py-2 rounded"
+                  onClick={() => setModalOpen(false)}
+                >
+                  Close
+                </button>
 
                 {/* Large player */}
                 <div className="mb-6">
-                  {videoUrls.length > 0 ? (
-                    <video key={modalIndex} src={videoUrls[modalIndex] || videoUrls[0]} controls autoPlay playsInline className="w-full max-h-[70vh] object-contain rounded" />
+                  <div className="mb-4">
+                    <h3 className="text-2xl tracking-tight" style={{ fontWeight: 400 }}>
+                      {galleryItems[modalIndex]?.title}
+                    </h3>
+                    <p className="text-sm opacity-60">{galleryItems[modalIndex]?.category}</p>
+                  </div>
+                  {galleryItems.length > 0 ? (
+                    <video
+                      key={modalIndex}
+                      src={galleryItems[modalIndex]?.src || galleryItems[0].src}
+                      controls
+                      autoPlay
+                      playsInline
+                      poster={galleryItems[modalIndex]?.poster || galleryItems[0].poster}
+                      preload="metadata"
+                      className="w-full max-h-[70vh] object-contain rounded"
+                    />
                   ) : (
                     <div className="p-12 text-center text-sm opacity-60">No videos available</div>
                   )}
@@ -148,10 +208,15 @@ export default function Portfolio() {
 
                 {/* Gallery thumbnails when in gallery mode */}
                 {galleryMode && (
-                  <div className="grid grid-cols-3 gap-4">
-                    {videoUrls.map((url, i) => (
-                      <button key={i} onClick={() => setModalIndex(i)} className="relative">
-                        <video src={url} className={`w-full h-28 object-cover rounded border ${i===modalIndex? 'ring-2 ring-[var(--soft-gold)]':''}`} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {galleryItems.map((item, i) => (
+                      <button key={i} onClick={() => setModalIndex(i)} className="relative w-full">
+                        <video
+                          src={item.src}
+                          poster={item.poster}
+                          preload="metadata"
+                          className={`w-full aspect-video object-cover rounded-xl border ${i===modalIndex? 'ring-2 ring-[var(--soft-gold)]':''}`}
+                        />
                       </button>
                     ))}
                   </div>

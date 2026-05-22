@@ -1,0 +1,24 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="120" x2="1100" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827" />
+      <stop offset="1" stop-color="#232126" />
+    </linearGradient>
+    <linearGradient id="ring" x1="240" y1="220" x2="920" y2="680" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E7B0" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#D4AF37" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#bg)" />
+  <circle cx="600" cy="450" r="250" stroke="url(#ring)" stroke-width="18" stroke-opacity="0.35" />
+  <circle cx="435" cy="330" r="68" fill="#F5E7B0" fill-opacity="0.18" stroke="#F5E7B0" stroke-opacity="0.22" />
+  <circle cx="785" cy="330" r="68" fill="#D4AF37" fill-opacity="0.16" stroke="#D4AF37" stroke-opacity="0.22" />
+  <circle cx="370" cy="590" r="68" fill="#D4AF37" fill-opacity="0.14" stroke="#D4AF37" stroke-opacity="0.22" />
+  <circle cx="830" cy="590" r="68" fill="#F5E7B0" fill-opacity="0.14" stroke="#F5E7B0" stroke-opacity="0.22" />
+  <path d="M490 350L530 390" stroke="#F5E7B0" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" />
+  <path d="M730 350L690 390" stroke="#D4AF37" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" />
+  <path d="M430 540L510 520" stroke="#D4AF37" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" />
+  <path d="M770 540L690 520" stroke="#F5E7B0" stroke-opacity="0.55" stroke-width="8" stroke-linecap="round" />
+  <text x="210" y="255" fill="#F7F2E8" font-family="Arial, Helvetica, sans-serif" font-size="58" letter-spacing="6">NAIN AUR NAQSH</text>
+  <text x="210" y="325" fill="#F5E7B0" font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="700" letter-spacing="2">Creator Network</text>
+</svg>

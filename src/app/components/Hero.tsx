@@ -1,6 +1,14 @@
 import { motion } from 'motion/react';
 
 export default function Hero() {
+  const scrollToPortfolio = () => {
+    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background with subtle gradient and glow */}
@@ -53,10 +61,18 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex gap-6 justify-center"
         >
-          <button className="px-8 py-4 bg-transparent border border-[var(--warm-ivory)] border-opacity-20 hover:border-opacity-40 hover:bg-white/5 transition-all duration-500 backdrop-blur-sm">
+          <button
+            type="button"
+            onClick={scrollToPortfolio}
+            className="px-8 py-4 bg-transparent border border-[var(--warm-ivory)] border-opacity-20 hover:border-opacity-40 hover:bg-white/5 transition-all duration-500 backdrop-blur-sm"
+          >
             View Work
           </button>
-          <button className="px-8 py-4 bg-[var(--soft-gold)] text-[var(--charcoal-black)] hover:bg-opacity-90 transition-all duration-500 shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]">
+          <button
+            type="button"
+            onClick={scrollToContact}
+            className="px-8 py-4 bg-[var(--soft-gold)] text-[var(--charcoal-black)] hover:bg-opacity-90 transition-all duration-500 shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]"
+          >
             Let's Talk
           </button>
         </motion.div>

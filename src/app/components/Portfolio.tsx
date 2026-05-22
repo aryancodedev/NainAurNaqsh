@@ -44,7 +44,7 @@ export default function Portfolio() {
 
 
   return (
-    <section ref={ref} className="min-h-screen py-32 px-6 bg-gradient-to-b from-[var(--charcoal-black)] to-[var(--midnight-navy)]">
+    <section id="portfolio" ref={ref} className="min-h-screen py-32 px-6 bg-gradient-to-b from-[var(--charcoal-black)] to-[var(--midnight-navy)]">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

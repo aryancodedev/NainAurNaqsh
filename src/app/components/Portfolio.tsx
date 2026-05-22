@@ -33,11 +33,11 @@ export default function Portfolio() {
   const workItems = [
     { title: "Yaduraj Realty", category: "Real Estate Brand Film", year: "2026", videoFile: "video1.mp4", thumbnailFile: "VIDEO 1.png", galleryIndex: 0 },
     { title: "Instant Energy Drinks", category: "Beverage Campaign", year: "2026", videoFile: "video2.mp4", thumbnailFile: "VIDEO 2.png", galleryIndex: 1 },
-    { title: "Twinkle Dental Care", category: "Healthcare Brand Story", year: "2025", videoFile: "video3.mp4", thumbnailFile: "VIDEO 4.png", galleryIndex: 2 },
+    { title: "Twinkle Dental Care", category: "Healthcare Brand Story", year: "2025", videoFile: "video4.mp4", thumbnailFile: "VIDEO 4.png", galleryIndex: 2 },
     { title: "Sundarone Hostels", category: "Hospitality Presence", year: "2025", videoFile: "video6.mp4", thumbnailFile: "VIDEO 6.png", galleryIndex: 3 }
   ];
 
-  const galleryVideoOrder = ['video1.mp4', 'video2.mp4', 'video3.mp4', 'video6.mp4', 'video4.mp4', 'video5.mp4'];
+  const galleryVideoOrder = ['video1.mp4', 'video2.mp4', 'video4.mp4', 'video6.mp4', 'video3.mp4', 'video5.mp4'];
   const galleryMeta: Record<string, { title: string; category: string; thumbnailFile: string }> = {
     'video1.mp4': { title: 'Yaduraj Realty', category: 'Real Estate Brand Film', thumbnailFile: 'VIDEO 1.png' },
     'video2.mp4': { title: 'Instant Energy Drinks', category: 'Beverage Campaign', thumbnailFile: 'VIDEO 2.png' },
